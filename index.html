@@ -1,0 +1,45 @@
+<html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<!--script type="text/javascript" src="http://code.jquery.com/jquery-1.7.0.min.js"></script-->
+<script type="text/javascript" name="baidu-tc-cerfication" data-appid="5419001" src="http://apps.bdimg.com/cloudaapi/lightapp.js"></script>
+<script type="text/javascript">
+function cmp_dp(o1, o2, pn) {
+	var fn = function(k) {
+		return (pn&&pn+'.'||'')+k;
+	};
+	for(k in o1) {
+		if(o1.hasOwnProperty(k)) {
+			if(o2.hasOwnProperty(k)) {
+				if(o1[k] !== o2[k]) {
+					if(o1[k] && o2[k] && typeof(o1[k]) == 'object' && typeof(o2[k]) == 'object') {
+						if(o1[k].__cmpdp_flag || o2[k].__cmpdp_flag) {
+							console.log(fn(k), o1[k], o2[k], '--LOOP--');
+						} else {
+							o1[k].__cmpdp_flag = true;
+							o2[k].__cmpdp_flag = true;
+							cmp_dp(o1[k], o2[k], fn(k));
+						}
+					} else {
+						console.log(fn(k), o1[k], o2[k]);
+					}
+				}
+			} else {
+				console.log(fn(k), o1[k], '--NONE--');
+			}
+		}
+	}
+	for(k in o2) {
+		if(o2.hasOwnProperty(k)) {
+			if(!o1.hasOwnProperty(k)) {
+				console.log(fn(k), '--NONE--', o2[k]);
+			}
+		}
+	}
+}
+</script>
+</head>
+<body>
+Test Page
+</body>
+</html>
